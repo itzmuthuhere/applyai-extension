@@ -8,8 +8,8 @@
 
 **Phase:** 4 — Chrome Extension
 **Active Day:** E2–E8 complete
-**Last Session:** Jun 11, 2026
-**Overall Status:** ALL FEATURES COMPLETE ✅ — auth working, popup tested. Next: live portal testing.
+**Last Session:** Jun 11, 2026 (BUG-E001 fixed — Greenhouse live-verified; Lever live-verified)
+**Overall Status:** ALL FEATURES COMPLETE ✅ — 5 of 6 portals live-tested (LinkedIn, Naukri, Indeed, Greenhouse, Lever). Workday pending platform maintenance. Next: signed-in end-to-end apply test.
 
 ---
 
@@ -23,7 +23,7 @@
 | LinkedIn Easy Apply content script | E4 | ✅ Complete | v1.0 | ⬜ Pending live test |
 | Naukri.com content script | E5 | ✅ Complete | v1.0 | ⬜ Pending live test |
 | Indeed.com content script | E6 | ✅ Complete | v1.0 | ⬜ Pending live test |
-| Workday + Greenhouse + Lever content scripts | E7 | ✅ Complete | v1.0 | ⬜ Pending live test |
+| Workday + Greenhouse + Lever content scripts | E7 | ✅ Complete | v1.1 | ✅ Greenhouse + Lever tested Jun 11, 2026; ⏸ Workday maintenance |
 | Application tracking sync + autopilot mode | E8 | ✅ Complete | v1.0 | ⬜ Pending live test |
 
 ---
@@ -48,13 +48,13 @@
 - `src/popup/main.tsx` ✅ — ReactDOM.createRoot entry
 - `src/popup/App.tsx` ✅ — login check → LoginScreen or Dashboard; LoginScreen shows features + Google sign-in button; Dashboard shows active status + portal list + sign out
 
-### Content Scripts (skeletons — E4–E7 will implement)
-- `src/content/linkedin.ts` ✅ — IIFE skeleton with data-applyai guard
-- `src/content/naukri.ts` ✅ — IIFE skeleton
-- `src/content/indeed.ts` ✅ — IIFE skeleton
-- `src/content/workday.ts` ✅ — IIFE skeleton
-- `src/content/greenhouse.ts` ✅ — IIFE skeleton
-- `src/content/lever.ts` ✅ — IIFE skeleton
+### Content Scripts (implemented E4–E7)
+- `src/content/linkedin.ts` ✅ — Easy Apply detection + button injection (detail panel selector)
+- `src/content/naukri.ts` ✅ — apply button injection + form fill
+- `src/content/indeed.ts` ✅ — viewjob pages, text-based apply button detection
+- `src/content/workday.ts` ✅ — *.myworkdayjobs.com (untested — platform maintenance)
+- `src/content/greenhouse.ts` ✅ — both board generations (boards. + job-boards.); isolated-world guard + 1.2s keep-alive re-injection loop (job-boards replaces `<html>` after failed React hydration); methods: tick/inject/findApplyButton/extractTitle/extractCompany/fillGreenhouseForm/fill/extractJobId
+- `src/content/lever.ts` ✅ — jobs.lever.co posting pages, tested live
 
 ---
 
@@ -120,7 +120,9 @@ E8 (Tracking+Autopilot) → E4–E7 ✅ + backend /api/applications/apply ✅
 
 ## KNOWN ISSUES
 
-_None currently. (BUG: jobQueue stored as object instead of array — FIXED in v1.1)_
+_None currently._
+- BUG-E001: Greenhouse "not injecting" on job-boards.greenhouse.io — ✅ FIXED Jun 11, 2026. Script always injected; the page replaces `<html>` after failed React hydration, wiping injected DOM. Fixed with isolated-world guard + keep-alive re-injection + new-DOM apply-button selectors.
+- (BUG: jobQueue stored as object instead of array — FIXED in v1.1)
 
 ---
 

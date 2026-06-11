@@ -1,5 +1,5 @@
 # ApplyAI Extension — Architecture
-> Version: 1.0 | Last updated: Jun 11, 2026
+> Version: 1.1 | Last updated: Jun 11, 2026
 
 ---
 
@@ -81,9 +81,10 @@ Same as supervised, except:
 ## CONTENT SCRIPT INJECTION RULES
 
 1. **IIFE wrapper** — every content script is wrapped in `(function applyaiXxx() { ... })()`
-2. **Double-injection guard** — first line checks `document.querySelector('[data-applyai]')` and returns if found; sets attribute immediately after
+2. **Double-injection guard** — guard must live in the isolated world (e.g. `window.__applyaiXxx` flag), NOT only in the DOM. React-hydrated SPAs (job-boards.greenhouse.io) replace the entire `<html>` element after a failed hydration, wiping any DOM markers. The `data-applyai` attribute is kept as a debug/test marker but is re-asserted by a keep-alive loop, never trusted as the guard.
 3. **No shared imports** — content scripts are standalone bundles; no imports from `src/api` or `src/storage`; all backend calls go through `chrome.runtime.sendMessage`
 4. **Minimal DOM footprint** — inject only what's needed; remove injected elements on navigation away
+5. **Keep-alive re-injection on SPA portals** — portals that client-side re-render (greenhouse job-boards) destroy injected UI; the content script runs a lightweight interval that re-injects the button when `#applyai-btn` disappears (injectApplyButton is idempotent via that id)
 
 ---
 
@@ -121,3 +122,4 @@ ZIP the entire `dist/` folder for Chrome Web Store submission.
 | 3 | React in popup only | Content scripts must be lightweight, no framework conflicts with host page |
 | 4 | Content scripts delegate API calls to service worker | JWT stays in one place; avoids CORS from content script context; simpler auth flow |
 | 5 | chrome.storage.local (not localStorage) | Shared across popup + service worker; localStorage is tab-scoped only |
+| 6 | Keep-alive loop instead of one-shot setTimeout in greenhouse.ts | job-boards.greenhouse.io fails React hydration (its own #418/#423/#425 errors) and re-renders the whole document ~1s after load, destroying injected DOM. Verified Jun 11, 2026 via mutation-observer timeline: script injects fine at 644ms, `<html>` replaced shortly after. NOT a CSP or CRXJS loader issue — dynamic import works on this host. |

@@ -10,11 +10,11 @@
 | E1 | Project scaffold | ✅ Complete | v1.0 | Jun 11, 2026 | ⬜ Pending load test |
 | E2 | Auth + profile sync | ✅ Complete | v1.1 | Jun 11, 2026 | ✅ Tested — sign-in works end-to-end |
 | E3 | Popup UI | ✅ Complete | v1.1 | Jun 11, 2026 | ✅ Tested — dashboard renders correctly |
-| E4 | LinkedIn Easy Apply | ✅ Complete | v1.0 | Jun 11, 2026 | ⬜ Pending live test |
-| E5 | Naukri.com | ✅ Complete | v1.0 | Jun 11, 2026 | ⬜ Pending live test |
-| E6 | Indeed.com | ✅ Complete | v1.0 | Jun 11, 2026 | ⬜ Pending live test |
-| E7 | Workday + Greenhouse + Lever | ✅ Complete | v1.0 | Jun 11, 2026 | ⬜ Pending live test |
-| E8 | App tracking + autopilot mode | ✅ Complete | v1.0 | Jun 11, 2026 | ⬜ Pending live test |
+| E4 | LinkedIn Easy Apply | ✅ Complete | v1.1 | Jun 11, 2026 | ✅ Tested — button injected in detail panel |
+| E5 | Naukri.com | ✅ Complete | v1.1 | Jun 11, 2026 | ✅ Tested — button injected |
+| E6 | Indeed.com | ✅ Complete | v1.1 | Jun 11, 2026 | ✅ Tested — button injected (text selector fix) |
+| E7 | Workday + Greenhouse + Lever | ✅ Complete | v1.0 | Jun 11, 2026 | ⏸ Workday: maintenance; GH/Lever: BofA blocked |
+| E8 | App tracking + autopilot mode | ✅ Complete | v1.0 | Jun 11, 2026 | ⬜ Pending live apply test |
 
 ---
 
@@ -28,8 +28,8 @@
 
 ## CURRENT STATUS
 
-**Next to build:** Live portal testing — LinkedIn, Naukri, Indeed, Workday, Greenhouse, Lever
-**Blocked on:** Nothing — sign-in is working ✅
+**Next to build:** Workday/Greenhouse/Lever live test + end-to-end apply test on LinkedIn
+**Blocked on:** Workday: global maintenance. Greenhouse/Lever: BofA managed browser blocks those domains.
 **Open bugs:** None
 **Last push:** Jun 11, 2026
 **Resume point:** Auth + popup fully working. Next: visit each portal with a job posting, confirm "Apply with ApplyAI" button appears, test form-fill and application recording.

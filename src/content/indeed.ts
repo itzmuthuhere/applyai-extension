@@ -9,11 +9,14 @@ import { recordApplication } from './shared/messaging';
   setTimeout(init, 1500);
 
   function init() {
+    // Indeed dropped stable IDs — find the primary apply button by text content
     const applyBtn =
       document.querySelector<HTMLElement>('#indeedApplyButton') ??
       document.querySelector<HTMLElement>('[class*="IndeedApplyButton"]') ??
       document.querySelector<HTMLElement>('[data-indeed-apply-jobid]') ??
-      document.querySelector<HTMLElement>('button[class*="apply"]');
+      Array.from(document.querySelectorAll<HTMLElement>('button')).find(
+        (btn) => /^apply\b/i.test(btn.textContent?.trim() ?? '')
+      ) ?? null;
 
     if (!applyBtn) { setTimeout(init, 1500); return; }
 

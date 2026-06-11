@@ -31,13 +31,23 @@ import { recordApplication } from './shared/messaging';
   function tryInject() {
     if (document.getElementById('applyai-btn')) return;
 
-    // Find the Easy Apply button (LinkedIn renders it with several possible selectors)
-    const easyApplyBtn =
-      document.querySelector<HTMLElement>('button.jobs-apply-button') ??
-      document.querySelector<HTMLElement>('[aria-label*="Easy Apply"]') ??
-      document.querySelector<HTMLElement>('.jobs-s-apply button');
+    // Scope to the job detail panel — avoids matching the "Easy Apply" filter chip in the search bar
+    const detailPanel =
+      document.querySelector<HTMLElement>('.jobs-details') ??
+      document.querySelector<HTMLElement>('.jobs-search__job-details--wrapper') ??
+      document.querySelector<HTMLElement>('.scaffold-layout__detail');
 
+    const scope = detailPanel ?? document;
+
+    const easyApplyBtn =
+      scope.querySelector<HTMLElement>('button.jobs-apply-button--top-card') ??
+      scope.querySelector<HTMLElement>('.jobs-apply-button--top-card button') ??
+      scope.querySelector<HTMLElement>('button[aria-label*="Easy Apply"]') ??
+      scope.querySelector<HTMLElement>('.jobs-s-apply button');
+
+    // Reject filter chips (they don't have an aria-label mentioning a company)
     if (!easyApplyBtn) return;
+    if (easyApplyBtn.closest('[class*="search-reusables"]')) return;
 
     const jobTitle =
       document.querySelector('.job-details-jobs-unified-top-card__job-title')?.textContent?.trim() ??

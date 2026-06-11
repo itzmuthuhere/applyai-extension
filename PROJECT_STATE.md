@@ -7,9 +7,9 @@
 ## CURRENT BUILD PHASE
 
 **Phase:** 4 — Chrome Extension
-**Active Day:** E1 — Project scaffold complete
+**Active Day:** E2–E8 complete
 **Last Session:** Jun 11, 2026
-**Overall Status:** E1 complete ✅ — ready to build E2 (Auth + profile sync)
+**Overall Status:** ALL FEATURES COMPLETE ✅ — blocked on ACTION_REQUIRED_E2 (Google OAuth client setup) before live testing
 
 ---
 
@@ -18,13 +18,13 @@
 | Feature | Day | Status | Version | Tested |
 |---------|-----|--------|---------|--------|
 | Project scaffold (Vite + CRXJS + TS + React) | E1 | ✅ Complete | v1.0 | ⬜ Pending load test |
-| Auth + profile sync (OAuth → JWT → storage) | E2 | ⬜ Not started | — | — |
-| Popup UI (job queue, stats, settings) | E3 | ⬜ Not started | — | — |
-| LinkedIn Easy Apply content script | E4 | ⬜ Not started | — | — |
-| Naukri.com content script | E5 | ⬜ Not started | — | — |
-| Indeed.com content script | E6 | ⬜ Not started | — | — |
-| Workday + Greenhouse + Lever content scripts | E7 | ⬜ Not started | — | — |
-| Application tracking sync + autopilot mode | E8 | ⬜ Not started | — | — |
+| Auth + profile sync (OAuth → JWT → storage) | E2 | ✅ Complete | v1.0 | ⬜ Pending ACTION_REQUIRED_E2 |
+| Popup UI (job queue, stats, settings) | E3 | ✅ Complete | v1.0 | ⬜ Pending device test |
+| LinkedIn Easy Apply content script | E4 | ✅ Complete | v1.0 | ⬜ Pending live test |
+| Naukri.com content script | E5 | ✅ Complete | v1.0 | ⬜ Pending live test |
+| Indeed.com content script | E6 | ✅ Complete | v1.0 | ⬜ Pending live test |
+| Workday + Greenhouse + Lever content scripts | E7 | ✅ Complete | v1.0 | ⬜ Pending live test |
+| Application tracking sync + autopilot mode | E8 | ✅ Complete | v1.0 | ⬜ Pending live test |
 
 ---
 

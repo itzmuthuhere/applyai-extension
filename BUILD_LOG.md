@@ -8,13 +8,13 @@
 | Day | Feature | Status | Version | Date | Tested |
 |-----|---------|--------|---------|------|--------|
 | E1 | Project scaffold | ✅ Complete | v1.0 | Jun 11, 2026 | ⬜ Pending load test |
-| E2 | Auth + profile sync | ⬜ Not started | — | — | — |
-| E3 | Popup UI | ⬜ Not started | — | — | — |
-| E4 | LinkedIn Easy Apply | ⬜ Not started | — | — | — |
-| E5 | Naukri.com | ⬜ Not started | — | — | — |
-| E6 | Indeed.com | ⬜ Not started | — | — | — |
-| E7 | Workday + Greenhouse + Lever | ⬜ Not started | — | — | — |
-| E8 | App tracking + autopilot mode | ⬜ Not started | — | — | — |
+| E2 | Auth + profile sync | ✅ Complete | v1.0 | Jun 11, 2026 | ⬜ Needs OAuth client (ACTION_REQUIRED_E2) |
+| E3 | Popup UI | ✅ Complete | v1.0 | Jun 11, 2026 | ⬜ Pending device test |
+| E4 | LinkedIn Easy Apply | ✅ Complete | v1.0 | Jun 11, 2026 | ⬜ Pending live test |
+| E5 | Naukri.com | ✅ Complete | v1.0 | Jun 11, 2026 | ⬜ Pending live test |
+| E6 | Indeed.com | ✅ Complete | v1.0 | Jun 11, 2026 | ⬜ Pending live test |
+| E7 | Workday + Greenhouse + Lever | ✅ Complete | v1.0 | Jun 11, 2026 | ⬜ Pending live test |
+| E8 | App tracking + autopilot mode | ✅ Complete | v1.0 | Jun 11, 2026 | ⬜ Pending live test |
 
 ---
 
@@ -28,11 +28,11 @@
 
 ## CURRENT STATUS
 
-**Next to build:** E2 — Auth + profile sync
-**Blocked on:** Nothing — ready
+**Next to build:** Live testing on portals
+**Blocked on:** ACTION_REQUIRED_E2 — need Google OAuth Client ID before sign-in works
 **Open bugs:** None
-**Last push:** Jun 11, 2026 (E1 scaffold)
-**Resume point:** E1 complete. Full project scaffold: Vite + CRXJS + React + TypeScript + service worker + popup shell + 6 content script skeletons + doc system.
+**Last push:** Jun 11, 2026 (E2–E8 complete)
+**Resume point:** ALL features built. Blocked on ACTION_REQUIRED_E2 (Google OAuth client setup in Cloud Console). Once done: rebuild, reload extension, test sign-in, then live-test each portal.
 
 ---
 

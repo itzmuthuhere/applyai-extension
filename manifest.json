@@ -12,6 +12,7 @@
     "https://in.indeed.com/*",
     "https://*.myworkdayjobs.com/*",
     "https://boards.greenhouse.io/*",
+    "https://job-boards.greenhouse.io/*",
     "https://jobs.lever.co/*"
   ],
   "background": {
@@ -56,7 +57,7 @@
       "run_at": "document_idle"
     },
     {
-      "matches": ["https://boards.greenhouse.io/*"],
+      "matches": ["https://boards.greenhouse.io/*", "https://job-boards.greenhouse.io/*"],
       "js": ["src/content/greenhouse.ts"],
       "run_at": "document_idle"
     },

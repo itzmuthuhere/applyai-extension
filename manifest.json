@@ -1,0 +1,58 @@
+{
+  "manifest_version": 3,
+  "name": "ApplyAI — Auto Apply",
+  "version": "1.0.0",
+  "description": "Auto-apply to jobs on LinkedIn, Naukri, Indeed and more. Syncs with your ApplyAI profile.",
+  "permissions": ["storage", "alarms", "activeTab"],
+  "host_permissions": [
+    "https://www.linkedin.com/*",
+    "https://www.naukri.com/*",
+    "https://www.indeed.com/*",
+    "https://in.indeed.com/*",
+    "https://*.myworkdayjobs.com/*",
+    "https://boards.greenhouse.io/*",
+    "https://jobs.lever.co/*"
+  ],
+  "background": {
+    "service_worker": "src/background/service-worker.ts",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "src/popup/index.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.linkedin.com/jobs/*"],
+      "js": ["src/content/linkedin.ts"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://www.naukri.com/*"],
+      "js": ["src/content/naukri.ts"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.indeed.com/viewjob*",
+        "https://in.indeed.com/viewjob*"
+      ],
+      "js": ["src/content/indeed.ts"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://*.myworkdayjobs.com/*"],
+      "js": ["src/content/workday.ts"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://boards.greenhouse.io/*"],
+      "js": ["src/content/greenhouse.ts"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://jobs.lever.co/*"],
+      "js": ["src/content/lever.ts"],
+      "run_at": "document_idle"
+    }
+  ]
+}

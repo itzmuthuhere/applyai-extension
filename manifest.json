@@ -3,8 +3,9 @@
   "name": "ApplyAI — Auto Apply",
   "version": "1.0.0",
   "description": "Auto-apply to jobs on LinkedIn, Naukri, Indeed and more. Syncs with your ApplyAI profile.",
-  "permissions": ["storage", "alarms", "activeTab"],
+  "permissions": ["storage", "alarms", "activeTab", "identity"],
   "host_permissions": [
+    "https://applyai-backend-production-3b67.up.railway.app/*",
     "https://www.linkedin.com/*",
     "https://www.naukri.com/*",
     "https://www.indeed.com/*",

@@ -9,7 +9,7 @@
 **Phase:** 4 — Chrome Extension
 **Active Day:** E2–E8 complete
 **Last Session:** Jun 11, 2026
-**Overall Status:** ALL FEATURES COMPLETE ✅ — blocked on ACTION_REQUIRED_E2 (Google OAuth client setup) before live testing
+**Overall Status:** ALL FEATURES COMPLETE ✅ — auth working, popup tested. Next: live portal testing.
 
 ---
 
@@ -18,8 +18,8 @@
 | Feature | Day | Status | Version | Tested |
 |---------|-----|--------|---------|--------|
 | Project scaffold (Vite + CRXJS + TS + React) | E1 | ✅ Complete | v1.0 | ⬜ Pending load test |
-| Auth + profile sync (OAuth → JWT → storage) | E2 | ✅ Complete | v1.0 | ⬜ Pending ACTION_REQUIRED_E2 |
-| Popup UI (job queue, stats, settings) | E3 | ✅ Complete | v1.0 | ⬜ Pending device test |
+| Auth + profile sync (OAuth → JWT → storage) | E2 | ✅ Complete | v1.1 | ✅ Tested Jun 11, 2026 |
+| Popup UI (job queue, stats, settings) | E3 | ✅ Complete | v1.1 | ✅ Tested Jun 11, 2026 |
 | LinkedIn Easy Apply content script | E4 | ✅ Complete | v1.0 | ⬜ Pending live test |
 | Naukri.com content script | E5 | ✅ Complete | v1.0 | ⬜ Pending live test |
 | Indeed.com content script | E6 | ✅ Complete | v1.0 | ⬜ Pending live test |
@@ -114,12 +114,13 @@ E8 (Tracking+Autopilot) → E4–E7 ✅ + backend /api/applications/apply ✅
 | Variable | Value | Status |
 |----------|-------|--------|
 | `VITE_API_URL` | https://applyai-backend-production-3b67.up.railway.app | ✅ Set in .env |
+| `VITE_GOOGLE_CLIENT_ID` | 1008203537522-5dg9nnn9kf4dfmlbhe592fu6rhppmu4s.apps.googleusercontent.com | ✅ Set in .env |
 
 ---
 
 ## KNOWN ISSUES
 
-_None currently._
+_None currently. (BUG: jobQueue stored as object instead of array — FIXED in v1.1)_
 
 ---
 

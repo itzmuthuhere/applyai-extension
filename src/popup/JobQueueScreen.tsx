@@ -13,7 +13,10 @@ export default function JobQueueScreen() {
   const [jobs, setJobs] = useState<Job[]>([]);
 
   useEffect(() => {
-    chrome.storage.local.get('jobQueue', (r) => setJobs(r.jobQueue ?? []));
+    chrome.storage.local.get('jobQueue', (r) => {
+      const q = r.jobQueue;
+      setJobs(Array.isArray(q) ? q : []);
+    });
   }, []);
 
   if (jobs.length === 0) {

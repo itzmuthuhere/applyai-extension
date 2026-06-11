@@ -16,10 +16,11 @@ async function syncJobQueue() {
   const jwt = await getJwt();
   if (!jwt) return;
   try {
-    const [jobs, resumes] = await Promise.all([
-      applyaiApi.get<Job[]>('/api/jobs/feed', jwt),
+    const [feed, resumes] = await Promise.all([
+      applyaiApi.get<{ content: Job[] } | Job[]>('/api/jobs/feed', jwt),
       applyaiApi.get<unknown[]>('/api/resumes', jwt),
     ]);
+    const jobs = Array.isArray(feed) ? feed : (feed.content ?? []);
     await setJobQueue(jobs);
     await chrome.storage.local.set({ resumes });
   } catch {

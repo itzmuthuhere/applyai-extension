@@ -32,25 +32,49 @@ export async function signInWithGoogle(): Promise<void> {
     );
   });
 
-  const fragment = new URL(responseUrl).hash.slice(1);
+  let fragment: string;
+  try {
+    fragment = new URL(responseUrl).hash.slice(1);
+  } catch {
+    throw new Error(`Bad redirect URL: ${responseUrl}`);
+  }
+
   const idToken = new URLSearchParams(fragment).get('id_token');
-  if (!idToken) throw new Error('No id_token returned from Google');
+  if (!idToken) {
+    const errParam = new URLSearchParams(fragment).get('error');
+    throw new Error(errParam ? `Google error: ${errParam}` : `No id_token in redirect. Fragment: ${fragment.slice(0, 100)}`);
+  }
 
-  const res = await fetch(`${API_URL}/api/auth/google`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ idToken }),
-  });
-  if (!res.ok) throw new Error('Backend authentication failed');
+  let res: Response;
+  try {
+    res = await fetch(`${API_URL}/api/auth/google`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ idToken }),
+    });
+  } catch (fetchErr: any) {
+    throw new Error(`Network error contacting backend: ${fetchErr.message}`);
+  }
 
-  const data: { jwt: string; user: StoredUser } = await res.json();
+  if (!res.ok) {
+    const body = await res.text().catch(() => '');
+    throw new Error(`Backend returned ${res.status}: ${body.slice(0, 200)}`);
+  }
+
+  let data: { jwt: string; user: StoredUser };
+  try {
+    data = await res.json();
+  } catch {
+    throw new Error('Backend response was not valid JSON');
+  }
 
   await setJwt(data.jwt);
   await setUser(data.user);
 
   // Prime the job queue cache immediately after login
   try {
-    const jobs = await applyaiApi.get<Job[]>('/api/jobs/feed', data.jwt);
+    const feed = await applyaiApi.get<{ content: Job[] } | Job[]>('/api/jobs/feed', data.jwt);
+    const jobs = Array.isArray(feed) ? feed : (feed.content ?? []);
     await setJobQueue(jobs);
   } catch {
     // non-fatal — service worker will sync on next alarm

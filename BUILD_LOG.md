@@ -8,8 +8,8 @@
 | Day | Feature | Status | Version | Date | Tested |
 |-----|---------|--------|---------|------|--------|
 | E1 | Project scaffold | ✅ Complete | v1.0 | Jun 11, 2026 | ⬜ Pending load test |
-| E2 | Auth + profile sync | ✅ Complete | v1.0 | Jun 11, 2026 | ⬜ Needs OAuth client (ACTION_REQUIRED_E2) |
-| E3 | Popup UI | ✅ Complete | v1.0 | Jun 11, 2026 | ⬜ Pending device test |
+| E2 | Auth + profile sync | ✅ Complete | v1.1 | Jun 11, 2026 | ✅ Tested — sign-in works end-to-end |
+| E3 | Popup UI | ✅ Complete | v1.1 | Jun 11, 2026 | ✅ Tested — dashboard renders correctly |
 | E4 | LinkedIn Easy Apply | ✅ Complete | v1.0 | Jun 11, 2026 | ⬜ Pending live test |
 | E5 | Naukri.com | ✅ Complete | v1.0 | Jun 11, 2026 | ⬜ Pending live test |
 | E6 | Indeed.com | ✅ Complete | v1.0 | Jun 11, 2026 | ⬜ Pending live test |
@@ -28,11 +28,11 @@
 
 ## CURRENT STATUS
 
-**Next to build:** Live testing on portals
-**Blocked on:** ACTION_REQUIRED_E2 — need Google OAuth Client ID before sign-in works
+**Next to build:** Live portal testing — LinkedIn, Naukri, Indeed, Workday, Greenhouse, Lever
+**Blocked on:** Nothing — sign-in is working ✅
 **Open bugs:** None
-**Last push:** Jun 11, 2026 (E2–E8 complete)
-**Resume point:** ALL features built. Blocked on ACTION_REQUIRED_E2 (Google OAuth client setup in Cloud Console). Once done: rebuild, reload extension, test sign-in, then live-test each portal.
+**Last push:** Jun 11, 2026
+**Resume point:** Auth + popup fully working. Next: visit each portal with a job posting, confirm "Apply with ApplyAI" button appears, test form-fill and application recording.
 
 ---
 
@@ -59,3 +59,27 @@
 **Files created:** 16
 **Commit:** (see below)
 **Status:** ✅ E1 complete
+
+---
+
+### SESSION 2 — Jun 11, 2026 [E2/E3: Auth + Popup — Live Test + Bug Fixes]
+**Type:** Bug Fix + Live Test
+**Goal:** Complete ACTION_REQUIRED_E2 (Google OAuth client), test sign-in end-to-end
+
+**What was done:**
+- Created new Google Cloud project `applyai-499114` (new project — old project `applyai-47158` was inaccessible)
+- Created OAuth 2.0 Web client `ApplyAI Chrome Extension` with redirect URI `https://akeabgbbnljoeejdmffaminjhjdnopdm.chromiumapp.org/oauth2`
+- Added `VITE_GOOGLE_CLIENT_ID` to `.env`
+- Fixed missing `identity` permission in `manifest.json`
+- Added `https://applyai-backend-production-3b67.up.railway.app/*` to `host_permissions`
+- Fixed `JobFeedResponse` bug: backend returns `{content, page, size, totalElements}` not a plain array — auth.ts and service-worker.ts now extract `.content`
+- Added defensive `Array.isArray` guard in `JobQueueScreen` to prevent future crashes
+
+**Bugs fixed:**
+- `Cannot read properties of undefined (reading 'getRedirectURL')` — missing `identity` permission
+- `TypeError: e.slice is not a function` — jobQueue stored as object instead of array (backend feed response shape mismatch)
+
+**Result:** Sign-in works end-to-end. Popup shows dashboard with FREE badge, Job Queue tab, Settings tab. All portals active in status bar.
+
+**Files changed:** `manifest.json`, `.env`, `src/popup/auth.ts`, `src/background/service-worker.ts`, `src/popup/JobQueueScreen.tsx`
+**Status:** ✅ E2 + E3 live-tested and working
